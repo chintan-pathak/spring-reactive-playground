@@ -1,7 +1,7 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.2.3'
-    id 'io.spring.dependency-management' version '1.1.4'
+    id 'org.springframework.boot' version '3.4.3'
+    id 'io.spring.dependency-management' version '1.1.7'
 }
 
 group = 'com.chintanpathak'
@@ -16,33 +16,36 @@ repositories {
     mavenCentral()
 }
 
-configurations {
-    all*.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
-    all*.exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
-}
-
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web:3.2.3'
+    // Spring Boot Starter WebFlux for Reactive Programming
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
-    // Spring Boot Starter for Logging (includes Log4j 2)
-    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+    // MongoDB Reactive support
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 
-    // Log4j 2 API
-    implementation 'org.apache.logging.log4j:log4j-api:2.23.1'
+    // Spring Security for securing the application
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 
-    // Log4j 2 Kafka Appender
-    implementation ('org.apache.kafka:kafka-log4j-appender:3.7.0') {
-        exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
-        exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
-        exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
-    }
+    // Spring Boot Logging (Spring Boot already includes logging via Logback by default)
+    implementation 'org.springframework.boot:spring-boot-starter-logging'
 
-    // Kafka Clients (for Kafka integration)
-    implementation 'org.apache.kafka:kafka-clients:3.6.1'
+    // Prometheus support for monitoring and metrics tracking
+    implementation 'io.micrometer:micrometer-registry-prometheus'
 
+    // Spring Boot Actuator for monitoring and metrics
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    // For logging and tracing in reactive contexts (optional)
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    // Optional: For handling authentication with JWT (if using JWT-based security)
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+
+    // Testing dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
 }
 
-tasks.named('test') {
+test {
     useJUnitPlatform()
 }
