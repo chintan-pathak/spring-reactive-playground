@@ -1,0 +1,48 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.2.3'
+    id 'io.spring.dependency-management' version '1.1.4'
+}
+
+group = 'com.chintanpathak'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_23
+    targetCompatibility = JavaVersion.VERSION_23
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    all*.exclude group: 'org.apache.logging.log4j', module: 'log4j-to-slf4j'
+    all*.exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web:3.2.3'
+
+    // Spring Boot Starter for Logging (includes Log4j 2)
+    implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+    // Log4j 2 API
+    implementation 'org.apache.logging.log4j:log4j-api:2.23.1'
+
+    // Log4j 2 Kafka Appender
+    implementation ('org.apache.kafka:kafka-log4j-appender:3.7.0') {
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-slf4j-impl'
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-api'
+        exclude group: 'org.apache.logging.log4j', module: 'log4j-core'
+    }
+
+    // Kafka Clients (for Kafka integration)
+    implementation 'org.apache.kafka:kafka-clients:3.6.1'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
