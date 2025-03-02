@@ -24,7 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 
     // Spring Security for securing the application
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
 
     // Spring Boot Logging (Spring Boot already includes logging via Logback by default)
     implementation 'org.springframework.boot:spring-boot-starter-logging'
@@ -39,7 +39,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aop'
 
     // Optional: For handling authentication with JWT (if using JWT-based security)
-    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+//    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 
     // Testing dependencies
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
